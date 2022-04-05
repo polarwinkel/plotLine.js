@@ -1,43 +1,58 @@
-Timeline.js
+plotLine.js
 ===========
 
 
-Timeline.js is a lightweight JS library to plot graphs using Timeline. As it uses Timeline, you can add event listeners on the plotted graph very easily.
+Timeline.js is a lightweight JS library to plot data and function graphs using `svg`-output.
 
 I coded it because I couldn't find any basic JS library to do this, without any external dependencies and extra features. Timeline.js is only 13k once minified, and can be reduced under 10k with obfuscation. Better results may be obtained with a little refactor, but that's enough for me. Plus it can be very easily customised to fit your needs.
 
 ## Live demos
 
-* [Single graph example](http://phyks.github.io/timeline.js/examples/index.html)
-* [Multi graph example](http://phyks.github.io/timeline.js/examples/index2.html)
-* [Rounded graph example](http://phyks.github.io/timeline.js/examples/index3.html)
-* [Dashed graph example](http://phyks.github.io/timeline.js/examples/index4.html)
-* [Line only graph example](http://phyks.github.io/timeline.js/examples/index5.html)
-* [Graph with legend example](http://phyks.github.io/timeline.js/examples/index6.html)
-* [Interactivity with points example](http://phyks.github.io/timeline.js/examples/index7.html)
-* [Multiple holders example](http://phyks.github.io/timeline.js/examples/index8.html)
+See in the example-folder.
 
 ## Usage
 
-(See examples for more info. For live examples, see http://phyks.github.io/timeline.js/)
+### super-quick way
 
+You must include the `plotLine.js` script:
 
-First, you must include the `timeline.js` or `timeline.min.js` script.
+`<script type="text/javascript" src="plotLine.js"></script>`
 
-Then, you need to init a Timeline object, using something like `var tl = new Timeline({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'rounded': false, 'x_callback': false});`. The arguments are all optional and are:
-* `id` : the id of the parent element that will contain the Timeline
-* `width` / `height` : width and height of the created Timeline
-* `grid` : none / small / big / both to choose which type of grid you want
-* `x_axis` : true / false to show / hide the x axis
-* `line` : none / line / dashed to choose line type. You can edit the dasharray by replacing `Timeline.dash_style` value
-* `fill` : true / false to fill the area below the graph or not
-* `rounded` : true / false to use splines to smoothen the graph or not
-* `x_callback` : callback function to call to get texts for the x legend. Not yet implemented
+if you downloaded `plotLine.js` to the same folder of your HTML-file.
 
-_Note :_ One Timeline object corresponds to one holder.
+Then there is a `plotQuick`-Function to get your result in just one line of code:
+
+`<script>plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>`
+
+### more powerful way
+
+For more options you need to init a plotLine object, using something like `var tl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'smooth': false, 'x_label': false});`.
+
+All the arguments are all optional and can be checked in the comment in the top of `plotLine.js`:
+
+```
+/* Initialization :
+ * arg is an object with :
+ * id = id of the parent block
+ * height / width = size of the svg (default 600px 450px)
+ * line = none / _line_ / dashed to choose line type
+ * grid = _main_ / small / both / none to show grid
+ * x_axis = _true_ / false to show or hide x axis (boolean)
+ * y_axis = _true_ / false to show or hide y axis (boolean)
+ * x_label = _true_ / false to show or hide x labels (boolean)
+ * y_label = _true_ / false to show or hide y labels (boolean)
+ * points = _true_ / false to draw points (boolean)
+ * smooth = true / _false_ to use splines to smoothen the graph (boolean)
+ * fill = true / _false_ to fill below the graph or not (boolean)
+ */
+```
+
+See examples for more info!
+
+_Note :_ One plotLine object corresponds to one holder.
 
 Then, you can add as many graphs as you want, with `tl.addGraph(NAME, COLOR);` where COLOR must be a valid CSS color.
-And you can add points using `tl.addPoints(GRAPH_NAME, POINTS);`. Points is an array of point objects, which are of the type `{'x': ABSCISSA, 'y': ORDINATE, 'label': LABEL}`. LABEL is the text to display in the infobox when the mouse is over the point. You can use '%x' and '%y' in labels and they will be automatically replaced by the coordinates. You can also use `<sup>` and `<sub>` HTML tags. You can add another (optional) element `click` which must be a ffunction to bind to onclick event on this point.
+And you can add points using `tl.addPoints(GRAPH_NAME, POINTS);`.
 
 _Note_ : You don't have to sort the points inside a same list of points in a tl.addGraph call. They will be sorted for you. But, if you call tl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
 
@@ -51,19 +66,28 @@ Finally, you can draw the timeline with `tl.draw();`.
 ## License
 
 ```
-* --------------------------------------------------------------------------------
-* "THE NO-ALCOHOL BEER-WARE LICENSE" (Revision 42):
-* Phyks (webmaster@phyks.me) wrote this file. As long as you retain this notice you
-* can do whatever you want with this stuff (and you can also do whatever you want
-* with this stuff without retaining it, but that's not cool...). If we meet some 
-* day, and you think this stuff is worth it, you can buy me a <del>beer</del> soda 
-* in return.
-*																		Phyks
-* ---------------------------------------------------------------------------------
+ * --------------------------------------------------------------------------------
+ * "THE NO-ALCOHOL BEER-WARE LICENSE" (Revision 42):
+ * Phyks (webmaster@phyks.me) and polarwinkel (it@polarwinkel.de) wrote this file.
+ * As long as you retain this notice you can do whatever you want with this stuff 
+ * (and you can also do whatever you want with this stuff without retaining it, but
+ * that's not cool...). If we meet some day, and you think this stuff is worth it,
+ * you can buy me a soda (Phyks) or a beer (polarwinkel) in return.
+ * Phyks, polarwinkel
+ * ---------------------------------------------------------------------------------
 ```
+
+## Credits
+
+This is forked from Timeline.js from Phyks:
+https://github.com/Phyks/timeline.js
+Thanks a lot for this, Phyks!
+
+Much of his code is unchanged, I added some stuff like axis labels, function plotting, some options and more.
+I removed labels for the data points.
 
 ## Known bugs / TODO
 
-Feel free to contribute !
+__This is still work in progress, the api might change during 2022!__
 
-* Y axis is not implemented, but could be implemented easily
+Feel free to contribute !

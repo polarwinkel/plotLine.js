@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript" src="../plotLine.js"></script>
+    
+    <h1>Simple Examples for <code>plotLine.js</code></h1>
+    <p>To use <code>plotLine.js</code> you just need to copy the file <code>plotLine.js</code> to your project and import the script in your HTML.</p>
+    <p>Then your first steps are easy-going:</p>
+    
+    <h2>Plot Data</h2>
+    <p>all it takes is</p>
+    <code>plotQuick([[0,3],[1,2],[2,-1.5],[4,0]]);</code>
+    <p> within a <code>script</code>-Tag to get this:</p>
+    <script>plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>
+    
+    <h2>Plot a Function</h2>
+    <p>To plot a math function it needs to be written as a Java-Script function.</p>
+    <p>This:</p>
+    <script>plotQuick(function(x){return Math.sin(x)}, -3.14, 3.14);</script>
+    <p>is done by the code</p>
+    <code>plotQuick(function(x){return Math.sin(x)}, -3.14, 3.14);</code>
+  </body>
+</html>
