@@ -1,7 +1,9 @@
 /* plotLine.js
+ * v1.0.0
+ * published and maintained by Dirk Winkel (https://polarwinkel.de)
+ * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
  * Authors: Phyks (http://phyks.me), Dirk Winkel (https://polarwinkel.de)
- * https://github.com/polarwinkel/plotLine.js
 
  * --------------------------------------------------------------------------------
  * "THE NO-ALCOHOL BEER-WARE LICENSE" (Revision 42):
@@ -39,13 +41,15 @@ function randId() {
 }
 
 function plotQuick(data, min=0, max=1) {
-    pl = new plotLine()
-    pl.addGraph();
     if (typeof data == 'object') {
+        pl = new plotLine()
+        pl.addGraph();
         pl.addGraph('plot', 'blue');
         pl.addPoints('plot', data);
         pl.draw();
     } else if (typeof data == 'function') {
+        pl = new plotLine()
+        pl.addGraph();
         pl.addGraph('plot', 'blue');
         pl.addFunction('plot', data, min, max);
         pl.draw();
@@ -94,7 +98,12 @@ function plotLine(arg = {}) {
     
     if (arg.id === undefined){
         arg.id = randId();
-        document.write('<div id="' + arg.id + '" style="width:600px;height:450px;"></div>');
+        var newDiv = document.createElement('div');
+        newDiv.id = arg.id;
+        newDiv.width = arg.width;
+        newDiv.height = arg.height;
+        var parent = document.currentScript.parentElement;
+        parent.insertBefore(newDiv, document.currentScript.nextSibling);
     }
     
     var arrScripts = document.getElementsByTagName('script');

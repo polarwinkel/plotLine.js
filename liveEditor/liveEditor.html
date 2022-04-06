@@ -1,0 +1,27 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>plotLine.js Live Editor</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="../plotLine.js"></script>
+        <script>
+function refresh() {
+    var oldScript = document.getElementById('script');
+    var out = document.getElementById('out');
+    var newCode = document.getElementById('in').value;
+    var newScript = document.createElement('script');
+    newScript.id = 'script';
+    newScript.text = newCode;
+    out.innerHTML = '';
+    out.appendChild(newScript);
+}
+        </script>
+        <textarea id="in" style="width: 100%; height: 10em;">plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</textarea><br />
+        <button onclick="refresh();">refresh</button><br />
+        <div id="out" style="border: 1px solid black; margin: 1em; min-width: 600px; min-height: 450px;">
+            <p>(see you result here)</p>
+        </div>
+    </body>
+</html>
