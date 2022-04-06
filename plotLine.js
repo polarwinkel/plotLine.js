@@ -451,9 +451,9 @@ plotLine.prototype.scale = function(data) {
             i++;
             if (origin.y+i*scalewidth.y <0) continue;
             label = this.createElement('text', {'class': 'legend_y', 'fill': 'gray', 'transform': 'translate(0, '+this.parent_holder.offsetHeight+') scale(1, -1)'});
-            label.appendChild(document.createTextNode(i*interval));
+            label.appendChild(document.createTextNode(-i*interval));
             label.setAttribute('x', origin.x+5);
-            label.setAttribute('y', origin.y+i*scalewidth.y);
+            label.setAttribute('y', this.parent_holder.offsetHeight-origin.y-i*scalewidth.y);
             this.g.appendChild(label);
         }
     }
