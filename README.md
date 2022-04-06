@@ -8,8 +8,12 @@ I forked/coded it because I couldn't find any other basic JS library to do this,
 
 ## Live demos
 
-See in the example-folder.
+See in the example-folder:
 
+- [simple.html](https://polarwinkel.github.io/plotLine.js/examples/simple.html)
+- [showcase.html](https://polarwinkel.github.io/plotLine.js/examples/showcase.html)
+
+You can also give it a try for yourself in the [Live Editor](https://polarwinkel.github.io/plotLine.js/liveEditor/liveEditor.html)!
 ## Usage
 
 ### Preparation
