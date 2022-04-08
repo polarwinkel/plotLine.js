@@ -30,6 +30,11 @@ Then there is a `plotQuick`-Function to get your result in just one line of code
 
 `<script>plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>`
 
+or
+
+`<script>plotQuick('Math.sin(x)', -3.14, 3.14);</script>`
+
+
 ### The more powerful way
 
 For more options you need to init a plotLine object, using something like `var tl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'smooth': false, 'x_label': false});`.

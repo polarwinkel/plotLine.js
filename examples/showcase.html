@@ -16,6 +16,8 @@
     <h1><code>plotLine.js</code> Showcase</h1>
     <p>This shows a selection of some more advanced usage of <code>plotLine.js</code>.</p>
     <p>And yes: The default style can be used in dark modes as well!</p>
+    <p>Just check the code of this page to see how it's done.</p>
+    
     <h2>Plot multiple functions and/or data in one Plot</h2>
     <script type="text/javascript">
         var pl1 = new plotLine(arg={'smooth': false, 'fill': false, 'grid':'both', 'y_label': true, 'drawpoints': false});
@@ -23,13 +25,14 @@
         pl1.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,-1],[1.57,1],[3.14,0]]);
         
         pl1.addGraph('test2', 'blue');
-        pl1.addFunction('test2', function(x){return Math.sin(x)}, -3, 3.14);
+        pl1.addFunction('test2', 'Math.sin(x)', -3, 3.14);
         
         pl1.addGraph('test3', 'green');
-        pl1.addFunction('test3', function(x){return x*x*x}, -1.1, 1.1);
+        pl1.addFunction('test3', 'x*x*x', -1.1, 1.1);
         
         pl1.draw();
     </script>
+    
     <h2>Smoothen Data with a Spline to get a great sin</h2>
     <script type="text/javascript">
         var pl2 = new plotLine(arg={'smooth': true, 'fill': true, 'grid':'both', 'x_label': true, 'y_label': true, 'width': '1000px', 'height': '700px'});
@@ -37,7 +40,7 @@
         pl2.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,1],[1.57,-1],[3.14,0]]);
         
         pl2.addGraph('test2', 'blue');
-        pl2.addFunction('test2', function(x){return Math.sin(x)}, -3.14, 5);
+        pl2.addFunction('test2', 'Math.sin(x)', -3.14, 5);
         
         pl2.draw();
     </script>
