@@ -55,14 +55,44 @@ All the arguments are all optional and can be checked in the comment in the top 
 
 See examples for more info!
 
-_Note :_ One plotLine object corresponds to one holder.
+_Note:_ One plotLine object corresponds to one holder.
 
 Then, you can add as many graphs as you want, with `tl.addGraph(NAME, COLOR);` where COLOR must be a valid CSS color.
 And you can add points using `tl.addPoints(GRAPH_NAME, POINTS);`.
 
-_Note_ : You don't have to sort the points inside a same list of points in a tl.addGraph call. They will be sorted for you. But, if you call tl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
+_Note:_ You don't have to sort the points inside a same list of points in a tl.addGraph call. They will be sorted for you. But, if you call tl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
 
 Finally, you can draw the timeline with `tl.draw();`.
+
+### For Pro's: Show diagrams on new `innerHTML`
+
+If you want to include this in your project which sets new content with the JS-method `innerHTML` on a DOM-element `element` you will need to run the JS afterwards.
+
+You can do this with this function:
+
+```
+function runInnerHtmlJs(element) {
+    elements = element.querySelectorAll('script');
+    for (var i=0; i<elements.length; i++) {
+        var oldScript = elements[i];
+        var newScript = document.createElement('script');
+        Array.from(oldScript.attributes).forEach( attr => newScript.setAttribute(attr.name, attr.value) );
+        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    }
+}
+```
+
+which needs to be executed after including your content with something like
+
+```
+element.innerHTML = yourContentIncludingPlot;
+runInnerHtmlJs(element);
+```
+
+But be careful: _The above function will run_ __all__ _injected JS-Code from your `innerHTML`-content_, you need to make sure you can trust that code!
+
+If `yourContentIncludingPlot` is nested you will still need to implement recursion for that.
 
 ## Other functions
 
