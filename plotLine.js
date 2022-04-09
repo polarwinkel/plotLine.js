@@ -1,5 +1,5 @@
 /* plotLine.js
- * v1.0.1
+ * v1.0.1-dev
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
