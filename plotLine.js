@@ -103,7 +103,7 @@ function plotLine(arg = {}) {
         newDiv.width = this.width;
         newDiv.height = this.height;
         var parent = document.currentScript.parentElement;
-        parent.insertBefore(newDiv, document.currentScript.nextSibling);
+        parent.appendChild(newDiv);
     } else {
         this.id = arg.id;
     }

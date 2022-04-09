@@ -1,6 +1,6 @@
 {
     "name": "plotline.js",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "creates svg-diagrams from data-points and/or functions",
     "license": "THE NO-ALCOHOL BEER-WARE LICENSE",
     "repository": "bamblehorse/tiny",
