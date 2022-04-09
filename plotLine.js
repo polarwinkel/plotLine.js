@@ -40,16 +40,24 @@ function randId() {
     return id;
 }
 
-function plotQuick(data, min=0, max=1) {
+function plotQuick(data, a=0, b=1, c={}) {
     if (typeof data == 'object') {
+        if (typeof a === typeof {}) {
+            var arg = a;
+            console.log(arg); // TODO: set defaults, pass on
+        }
         pl = new plotLine()
         pl.addGraph('plot', 'green');
         pl.addPoints('plot', data);
         pl.draw();
     } else if (typeof data == 'string') {
-        pl = new plotLine(arg = {'drawpoints': false});
+        if (typeof c === typeof {}) {
+            var arg = c;
+            console.log(arg); // TODO: set defaults, pass on
+        }
+        pl = new plotLine(arg = {'drawpoints': false, 'smooth': true});
         pl.addGraph('plot', 'green');
-        pl.addFunction('plot', data, min, max);
+        pl.addFunction('plot', data, a, b);
         pl.draw();
     } else {
         console.log('syntax error in plotQuick');
@@ -200,6 +208,7 @@ plotLine.prototype.hasClass = function (element, cls) {
 // Add a new graph to the plotLine
 plotLine.prototype.addGraph = function (graph, color) {
     this.graphs[graph] = color;
+    // TODO: accept line, drawpoints, smooth, fill for graphs
 };
 
 // Test wether a graph of name "graph" already exists

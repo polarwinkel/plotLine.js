@@ -37,7 +37,7 @@ or
 
 ### The more powerful way
 
-For more options you need to init a plotLine object, using something like `var tl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'smooth': false, 'x_label': false});`.
+For more options you need to init a plotLine object, using something like `var pl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'smooth': false, 'x_label': false});`.
 
 All the arguments are all optional and can be checked in the comment in the top of `plotLine.js`:
 
@@ -52,7 +52,7 @@ All the arguments are all optional and can be checked in the comment in the top 
  * y_axis = _true_ / false to show or hide y axis (boolean)
  * x_label = _true_ / false to show or hide x labels (boolean)
  * y_label = _true_ / false to show or hide y labels (boolean)
- * points = _true_ / false to draw points (boolean)
+ * drawpoints = true / false to draw points (boolean)
  * smooth = true / _false_ to use splines to smoothen the graph (boolean)
  * fill = true / _false_ to fill below the graph or not (boolean)
  */
@@ -62,12 +62,12 @@ See examples for more info!
 
 _Note:_ One plotLine object corresponds to one holder.
 
-Then, you can add as many graphs as you want, with `tl.addGraph(NAME, COLOR);` where COLOR must be a valid CSS color.
-And you can add points using `tl.addPoints(GRAPH_NAME, POINTS);`.
+Then, you can add as many graphs as you want, with `pl.addGraph(NAME, COLOR);` where COLOR must be a valid CSS color.
+And you can add points using `pl.addPoints(GRAPH_NAME, POINTS);`.
 
-_Note:_ You don't have to sort the points inside a same list of points in a tl.addGraph call. They will be sorted for you. But, if you call tl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
+_Note:_ You don't have to sort the points inside a same list of points in a pl.addGraph call. They will be sorted for you. But, if you call pl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
 
-Finally, you can draw the timeline with `tl.draw();`.
+Finally, you can draw the plotLine with `pl.draw();`.
 
 ### For Pro's: Show diagrams on new `innerHTML`
 
@@ -101,8 +101,8 @@ If `yourContentIncludingPlot` is nested you will still need to implement recursi
 
 ## Other functions
 
-* `tl.clearGraph(GRAPH);` to delete the data for the graph GRAPH, or for all graphs + the graphs definition if GRAPH is not specified.
-* `tl.hasGraph(GRAPH);` to check if a graph with name GRAPH has already been defined or not.
+* `pl.clearGraph(GRAPH);` to delete the data for the graph GRAPH, or for all graphs + the graphs definition if GRAPH is not specified.
+* `pl.hasGraph(GRAPH);` to check if a graph with name GRAPH has already been defined or not.
 
 ## License
 
@@ -131,4 +131,6 @@ I removed labels for the data points.
 
 __This is still work in progress, the api might change during 2022!__
 
-Feel free to contribute !
+Maybe someday I will add support for bar diagrams.
+
+Feel free to contribute!
