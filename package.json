@@ -1,0 +1,19 @@
+{
+    "name": "plotline.js",
+    "version": "1.0.0",
+    "description": "creates svg-diagrams from data-points and/or functions",
+    "license": "THE NO-ALCOHOL BEER-WARE LICENSE",
+    "repository": "bamblehorse/tiny",
+    "main": "plotLine.js",
+    "keywords": [
+        "plot",
+        "graph",
+        "function"
+    ],
+    "homepage": "https://polarwinkel.github.io/plotLine.js/",
+    "author": "Dirk Winkel <it@polarwinkel.de> (https://polarwinkel.de/)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/polarwinkel/plotLine.js.git"
+    }
+}

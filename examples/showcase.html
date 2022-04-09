@@ -19,8 +19,9 @@
     <p>Just check the code of this page to see how it's done.</p>
     
     <h2>Plot multiple functions and/or data in one Plot</h2>
+    <div id="pl1"></div>
     <script type="text/javascript">
-        var pl1 = new plotLine(arg={'smooth': false, 'fill': false, 'grid':'both', 'y_label': true, 'drawpoints': false});
+        var pl1 = new plotLine(arg={'id': 'pl1', 'smooth': false, 'fill': false, 'grid':'both', 'y_label': true, 'drawpoints': false});
         pl1.addGraph('test1', 'red');
         pl1.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,-1],[1.57,1],[3.14,0]]);
         
@@ -34,8 +35,9 @@
     </script>
     
     <h2>Smoothen Data with a Spline to get a great sin</h2>
+    <div id="pl2"></div>
     <script type="text/javascript">
-        var pl2 = new plotLine(arg={'smooth': true, 'fill': true, 'grid':'both', 'x_label': true, 'y_label': true, 'width': '1000px', 'height': '700px'});
+        var pl2 = new plotLine(arg={'id': 'pl2', 'smooth': true, 'fill': true, 'grid':'main', 'x_label': true, 'y_label': true, 'width': '1000px', 'height': '700px'});
         pl2.addGraph('test1', 'red');
         pl2.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,1],[1.57,-1],[3.14,0]]);
         

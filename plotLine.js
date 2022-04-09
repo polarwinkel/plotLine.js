@@ -1,5 +1,5 @@
 /* plotLine.js
- * v1.0.0
+ * v1.0.1
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
@@ -43,13 +43,11 @@ function randId() {
 function plotQuick(data, min=0, max=1) {
     if (typeof data == 'object') {
         pl = new plotLine()
-        pl.addGraph();
         pl.addGraph('plot', 'green');
         pl.addPoints('plot', data);
         pl.draw();
     } else if (typeof data == 'string') {
         pl = new plotLine(arg = {'drawpoints': false});
-        pl.addGraph();
         pl.addGraph('plot', 'green');
         pl.addFunction('plot', data, min, max);
         pl.draw();
@@ -59,30 +57,23 @@ function plotQuick(data, min=0, max=1) {
 }
 
 function plotLine(arg = {}) {
-    if (arg.height === undefined) arg.height = '450px';
-    if (arg.width === undefined) arg.width = '600px';
-    if (arg.line === undefined) arg.line = 'line';
-    if (arg.grid === undefined) arg.grid = 'main';
-    if (arg.x_axis === undefined) arg.x_axis = true;
-    if (arg.y_axis === undefined) arg.y_axis = true;
-    if (arg.x_label === undefined) arg.x_label = true;
-    if (arg.y_label === undefined) arg.y_label = true;
-    if (arg.drawpoints === undefined) arg.drawpoints = true;
-    if (arg.smooth === undefined) arg.smooth = false;
-    if (arg.fill === undefined) arg.fill = false;
+    // set values
+    if (arg.height === undefined) {this.height = '450px'} else {this.height = arg.height};
+    if (arg.width === undefined) {this.width = '600px'} else {this.width = arg.width};
+    if (arg.line === undefined) {this.line = 'line'} else {this.line = arg.line};
+    if (arg.grid === undefined) {this.grid = 'main'} else {this.grid = arg.grid};
+    if (arg.x_axis === undefined) {this.x_axis = true} else {this.x_axis = arg.x_axis};
+    if (arg.y_axis === undefined) {this.y_axis = true} else {this.y_axis = arg.y_axis};
+    if (arg.x_label === undefined) {this.x_label = true} else {this.x_label = arg.x_label};
+    if (arg.y_label === undefined) {this.y_label = true} else {this.y_label = arg.y_label};
+    if (arg.drawpoints === undefined) {this.drawpoints = true} else {this.drawpoints = arg.drawpoints};
+    if (arg.smooth === undefined) {this.smooth = false} else {this.smooth = arg.smooth};
+    if (arg.fill === undefined) {this.fill = false} else {this.hfill = arg.fill};
     
-    this.height = arg.height;
-    this.width = arg.width;
-    this.line = arg.line;
-    this.grid = arg.grid;
-    this.x_axis = arg.x_axis;
-    this.y_axis = arg.y_axis;
-    this.x_label = arg.x_label;
-    this.y_label = arg.y_label;
-    this.drawpoints = arg.drawpoints;
-    this.smooth = arg.smooth;
-    this.fill = arg.fill;
-    
+    this.marginBottom = 10;
+    this.marginTop = 10;
+    this.marginLeft = 10;
+    this.marginRight = 10;
     this.dashed_style = '5, 5';
     this.parent_holder = false;
     this.g = false;
@@ -96,95 +87,82 @@ function plotLine(arg = {}) {
     this.ns = "http://www.w3.org/2000/svg";
     this.xlinkns = "http://www.w3.org/1999/xlink";
     
-    if (arg.id === undefined){
-        arg.id = randId();
-        var newDiv = document.createElement('div');
-        newDiv.id = arg.id;
-        newDiv.width = arg.width;
-        newDiv.height = arg.height;
-        var parent = document.currentScript.parentElement;
-        parent.insertBefore(newDiv, document.currentScript.nextSibling);
+    if(!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1")) {
+        alert("ERROR : Your browser does not support embedded SVG.");
     }
-    
-    var arrScripts = document.getElementsByTagName('script');
-    var currScript = arrScripts[arrScripts.length - 1];
-    
-    this.marginBottom = 10;
-    this.marginTop = 10;
-    this.marginLeft = 10;
-    this.marginRight = 10;
     window.onresize = function() {
         old();
         obj.resize(obj.parent_holder.offsetWidth, obj.parent_holder.offsetHeight);
     }
     
-    if(!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1")) {
-        alert("ERROR : Your browser does not support embedded SVG.");
+    // add div-container in-place if no parent-id is given
+    if (arg.id === undefined){
+        this.id = randId();
+        var newDiv = document.createElement('div');
+        newDiv.id = this.id;
+        newDiv.width = this.width;
+        newDiv.height = this.height;
+        var parent = document.currentScript.parentElement;
+        parent.insertBefore(newDiv, document.currentScript.nextSibling);
+    } else {
+        this.id = arg.id;
     }
-    this.parent_holder = document.getElementById(arg.id);
-    
-    this.parent_holder.style.width = arg.width;
-    this.parent_holder.style.height = arg.height;
-    var svg = this.createElement('svg:svg', { 'width': '100%', 'height': '100%' });
-    svg.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', this.xlinkns);
-    this.parent_holder.appendChild(svg);
-    
-    this.holder = this.parent_holder.querySelector('svg');
-    
-    defs = this.createElement('defs', {});
-    this.holder.appendChild(defs);
-    
-    // grid:
-    if(arg.grid === 'small' || arg.grid === 'both') {
-        var small_grid_pattern = this.createElement('pattern', { 'id': 'smallGrid', 'width': 8, 'height': 8, 'patternUnits': 'userSpaceOnUse' });
-
-        var small_grid_path = this.createElement('path', { 'd': 'M 8 0 L 0 0 0 8', 'fill': 'none', 'stroke': 'gray', 'stroke-width': '0.5' });
-        small_grid_pattern.appendChild(small_grid_path);
-        
-        defs.appendChild(small_grid_pattern);
-    }
-    if(arg.grid === 'main' || arg.grid === 'both') {
-        var grid_pattern = this.createElement('pattern', { 'id': 'grid', 'width': 80, 'height': 80, 'patternUnits': 'userSpaceOnUse' });
-        
-        if(arg.grid === 'both') {
-            var grid_rect = this.createElement('rect', {'width': 80, 'height': 80, 'fill': 'url(#smallGrid)' });
-            grid_pattern.appendChild(grid_rect);
-        }
-        
-        var grid_path = this.createElement('path', {'d': 'M 80 0 L 0 0 0 80', 'fill': 'none', 'stroke': 'gray', 'stroke-width': '1'});
-        grid_pattern.appendChild(grid_path);
-        
-        defs.appendChild(grid_pattern);
-    }
-    this.grid = arg.grid;
-    
-    // axis:
-    var marker = this.createElement('marker', {'id': 'markerArrow', 'markerWidth': 13, 'markerHeight': 13, 'refX': 2, 'refY': 6, 'orient': 'auto' });
-    var marker_path = this.createElement('path', {'d': 'M2,2 L2,11 L10,6 L2,2', 'fill': 'gray' });
-    marker.appendChild(marker_path);
-    defs.appendChild(marker);
+    this.parent_holder = document.getElementById(this.id);
+    this.parent_holder.style.width = this.width;
+    this.parent_holder.style.height = this.height;
+    this.holder = this.createElement('svg:svg', { 'width': '100%', 'height': '100%' });
+    this.holder.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', this.xlinkns);
+    this.parent_holder.appendChild(this.holder);
     
     this.g = this.createElement('g', {'transform': 'translate(0, ' + this.parent_holder.offsetHeight + ') scale(1, -1)'});
     this.holder.appendChild(this.g);
     
-    if(arg.x_axis === true) {
-        this.xaxis = this.createElement('line', {'x1': this.marginLeft, 'y1': this.parent_holder.offsetHeight / 2 + 1.5, 'x2': this.parent_holder.offsetWidth - 13 - this.marginRight, 'y2': this.parent_holder.offsetHeight / 2 + 1.5, 'stroke': 'gray', 'stroke-width': 3, 'marker-end': 'url("#markerArrow")'});
-        this.g.appendChild(this.xaxis);
-    }
-    if(arg.y_axis === true) {
-        this.yaxis = this.createElement('line', {'y1': this.marginBottom, 'x1': this.parent_holder.offsetWidth / 2 + 1.5, 'y2': this.parent_holder.offsetHeight - 13 - this.marginTop, 'x2': this.parent_holder.offsetWidth / 2 + 1.5, 'stroke': 'gray', 'stroke-width': 3, 'marker-end': 'url("#markerArrow")'});
-        this.g.appendChild(this.yaxis);
-    }
+    // grid:
+    if(this.grid === 'small' || this.grid === 'both') {
+        this.small_grid_pattern = this.createElement('pattern', { 'id': 'smallGrid', 'patternUnits': 'userSpaceOnUse' });
     
+        var small_grid_path = this.createElement('path', {'fill': 'none', 'stroke': 'gray', 'stroke-width': '0.5' });
+        this.small_grid_pattern.appendChild(small_grid_path);
+        
+        this.g.appendChild(this.small_grid_pattern);
+    }
+    if(this.grid === 'main' || this.grid === 'both') {
+        this.grid_pattern = this.createElement('pattern', { 'id': 'grid', 'patternUnits': 'userSpaceOnUse' });
+        
+        if(this.grid === 'both') {
+            var grid_rect = this.createElement('rect', {'fill': 'url(#smallGrid)' });
+            this.grid_pattern.appendChild(grid_rect);
+        }
+        
+        var grid_path = this.createElement('path', {'fill': 'none', 'stroke': 'gray', 'stroke-width': '1'});
+        this.grid_pattern.appendChild(grid_path);
+        
+        this.g.appendChild(this.grid_pattern);
+    }
     if(this.grid !== "none") {
-        var grid = this.createElement('rect', {'width': '100%', 'height': '100%'});
+        this.grid_rect = this.createElement('rect', {'width': '100%', 'height': '100%'});
         if(this.grid === 'main' || this.grid === 'both') {
-            grid.setAttribute('fill', 'url(#grid)');
+            this.grid_rect.setAttribute('fill', 'url(#grid)');
         }
         else {
-            grid.setAttribute('fill', 'url(#smallGrid)');
+            this.grid_rect.setAttribute('fill', 'url(#smallGrid)');
         }
-        this.g.appendChild(grid);
+        this.g.appendChild(this.grid_rect);
+    }
+    
+    // axis:
+    var marker = this.createElement('marker', {'id': 'markerArrow', 'markerWidth': 8, 'markerHeight': 8, 'refX': 6, 'refY': 4, 'orient': 'auto' });
+    var marker_path = this.createElement('path', {'d': 'M0,0 L8,4 L0,8 L2,4', 'fill': 'gray' });
+    marker.appendChild(marker_path);
+    this.g.appendChild(marker);
+    
+    if(this.x_axis === true) {
+        this.xaxis = this.createElement('line', {'x1': this.marginLeft, 'y1': this.parent_holder.offsetHeight / 2, 'x2': this.parent_holder.offsetWidth - this.marginRight, 'y2': this.parent_holder.offsetHeight / 2, 'stroke': 'gray', 'stroke-width': 2, 'marker-end': 'url("#markerArrow")'});
+        this.g.appendChild(this.xaxis);
+    }
+    if(this.y_axis === true) {
+        this.yaxis = this.createElement('line', {'y1': this.marginBottom, 'x1': this.parent_holder.offsetWidth / 2, 'y2': this.parent_holder.offsetHeight - this.marginTop, 'x2': this.parent_holder.offsetWidth / 2, 'stroke': 'gray', 'stroke-width': 2, 'marker-end': 'url("#markerArrow")'});
+        this.g.appendChild(this.yaxis);
     }
 }
 
@@ -193,12 +171,12 @@ plotLine.prototype.resize = function(new_width, new_height) {
     if(this.g !== false) {
         this.g.setAttribute('transform', 'translate(0, ' + new_height + ') scale(1, -1)');
         if(this.x_axis === true) {
-            this.xaxis.setAttribute('x2', new_width - this.marginLeft - 3 - this.marginRight);
+            this.xaxis.setAttribute('x2', new_width - this.marginLeft - this.marginRight);
         }
         if(this.y_axis === true) {
-            this.yaxis.setAttribute('y2', new_width - this.marginBottom - 3 - this.marginTop);
+            this.yaxis.setAttribute('y2', new_width - this.marginBottom - this.marginTop);
         }
-        [].forEach.call(this.holder.querySelectorAll('.label, .over, .point, .line, .graph, .legend_x'), function(el) {
+        [].forEach.call(this.g.querySelectorAll('.label, .over, .point, .line, .graph, .legend_x'), function(el) {
             el.parentNode.removeChild(el);
         });
         this.draw();
@@ -211,7 +189,6 @@ plotLine.prototype.createElement = function (element, attrs) {
     for(attr in attrs) {
         el.setAttribute(attr, attrs[attr]);
     }
-
     return el;
 };
 
@@ -391,31 +368,28 @@ plotLine.prototype.scale = function(data) {
     var origin = scale(0, 0);
     var coordinates = {'x': tmp.x - origin.x, 'y': tmp.y - origin.y };
     if(this.grid === 'main' || this.grid === 'both') {
-        var grid = this.holder.getElementById('grid');
-        grid.setAttribute('width', coordinates.x);
-        grid.setAttribute('height', coordinates.y);
+        this.grid_pattern.setAttribute('width', coordinates.x);
+        this.grid_pattern.setAttribute('height', coordinates.y);
         var main_coords = scale(Math.floor(minX / Math.pow(10, Math.floor(Math.log(maxX - minX) / Math.log(10)))) * Math.pow(10, Math.floor(Math.log(maxX - minX) / Math.log(10))), Math.floor(minY / Math.pow(10, Math.floor(Math.log(maxY - minY) / Math.log(10)))) * Math.pow(10, Math.floor(Math.log(maxY - minY) / Math.log(10))));
-        grid.setAttribute('y', main_coords.y);
-        grid.setAttribute('x', main_coords.x);
-        grid.querySelector('path').setAttribute('d', 'M '+coordinates.x+' 0 L 0 0 0 '+coordinates.y);
-
+        this.grid_pattern.setAttribute('x', main_coords.x);
+        this.grid_pattern.setAttribute('y', main_coords.y);
+        this.grid_pattern.querySelector('path').setAttribute('d', 'M '+coordinates.x+' 0 L 0 0 0 '+coordinates.y);
         if(this.grid === 'both') {
-            grid.querySelector('rect').setAttribute('width', coordinates.x);
-            grid.querySelector('rect').setAttribute('height', coordinates.y);
+            this.grid_pattern.querySelector('rect').setAttribute('width', coordinates.x);
+            this.grid_pattern.querySelector('rect').setAttribute('height', coordinates.y);
         }
     }
     if(this.grid === 'small' || this.grid === 'both') {
         coordinates.x = coordinates.x / 10;
         coordinates.y = coordinates.y / 10;
-        var grid = this.holder.getElementById('smallGrid');
-        grid.setAttribute('width', coordinates.x);
-        grid.setAttribute('height', coordinates.y);
+        this.small_grid_pattern.setAttribute('width', coordinates.x);
+        this.small_grid_pattern.setAttribute('height', coordinates.y);
         if(this.grid === 'small') {
             var small_coords = scale(Math.floor(minX / Math.pow(10, Math.floor(Math.log(maxX - minX) / Math.log(10)))) * Math.pow(10, Math.floor(Math.log(maxX - minX) / Math.log(10))), Math.floor(minY / Math.pow(10, Math.floor(Math.log(maxY - minY) / Math.log(10)))) * Math.pow(10, Math.floor(Math.log(maxY - minY) / Math.log(10))));
-            grid.setAttribute('y', small_coords.y);
-            grid.setAttribute('x', small_coords.x);
+            this.small_grid_pattern.setAttribute('x', small_coords.x);
+            this.small_grid_pattern.setAttribute('y', small_coords.y);
         }
-        grid.querySelector('path').setAttribute('d', 'M '+coordinates.x+' 0 L 0 0 0 '+coordinates.y);
+        this.small_grid_pattern.querySelector('path').setAttribute('d', 'M '+coordinates.x+' 0 L 0 0 0 '+coordinates.y);
     }
     
     // draw axis
