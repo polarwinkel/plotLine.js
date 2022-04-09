@@ -1,5 +1,5 @@
 /* plotLine.js
- * v1.0.1-dev
+ * v1.0.1
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
@@ -119,7 +119,7 @@ function plotLine(arg = {}) {
     
     // grid:
     if(this.grid === 'small' || this.grid === 'both') {
-        this.small_grid_pattern = this.createElement('pattern', { 'id': 'smallGrid', 'patternUnits': 'userSpaceOnUse' });
+        this.small_grid_pattern = this.createElement('pattern', { 'id': 'smallGrid'+this.id+'', 'patternUnits': 'userSpaceOnUse' });
     
         var small_grid_path = this.createElement('path', {'fill': 'none', 'stroke': 'gray', 'stroke-width': '0.5' });
         this.small_grid_pattern.appendChild(small_grid_path);
@@ -127,10 +127,10 @@ function plotLine(arg = {}) {
         this.g.appendChild(this.small_grid_pattern);
     }
     if(this.grid === 'main' || this.grid === 'both') {
-        this.grid_pattern = this.createElement('pattern', { 'id': 'grid', 'patternUnits': 'userSpaceOnUse' });
+        this.grid_pattern = this.createElement('pattern', { 'id': 'grid'+this.id+'', 'patternUnits': 'userSpaceOnUse' });
         
         if(this.grid === 'both') {
-            var grid_rect = this.createElement('rect', {'fill': 'url(#smallGrid)' });
+            var grid_rect = this.createElement('rect', {'fill': 'url(#smallGrid'+this.id+')' });
             this.grid_pattern.appendChild(grid_rect);
         }
         
@@ -142,10 +142,10 @@ function plotLine(arg = {}) {
     if(this.grid !== "none") {
         this.grid_rect = this.createElement('rect', {'width': '100%', 'height': '100%'});
         if(this.grid === 'main' || this.grid === 'both') {
-            this.grid_rect.setAttribute('fill', 'url(#grid)');
+            this.grid_rect.setAttribute('fill', 'url(#grid'+this.id+')');
         }
         else {
-            this.grid_rect.setAttribute('fill', 'url(#smallGrid)');
+            this.grid_rect.setAttribute('fill', 'url(#smallGrid'+this.id+')');
         }
         this.g.appendChild(this.grid_rect);
     }
