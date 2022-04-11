@@ -13,16 +13,16 @@
     
     <h2>Plot Data</h2>
     <p>all it takes is</p>
-    <code>plotQuick([[0,3],[1,2],[2,-1.5],[4,0]]);</code>
+    <code>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]], 'red');</code>
     <p> within a <code>script</code>-Tag to get this:</p>
-    <script>plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>
+    <script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]], 'red');</script>
     
     <h2>Plot a Function</h2>
     <p>To plot a math function it needs to be written as Java-Script.</p>
     <p>This:</p>
-    <script>plotQuick('Math.sin(x)', -3.14, 3.14, {test: 1});</script>
+    <script>quickFunc('3*Math.sin(x)', -3.14, 3.14);</script>
     <p>is done by the code</p>
-    <code>plotQuick('Math.sin(x)', -3.14, 3.14);</code>
+    <code>quickFunc('3*Math.sin(x)', -3.14, 3.14);</code>
     
   </body>
 </html>

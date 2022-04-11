@@ -22,17 +22,15 @@ You must include the `plotLine.js` script with something like
 
 `<script type="text/javascript" src="plotLine.js"></script>`
 
-if you downloaded `plotLine.js` to the same folder of your HTML-file.
-
 ### The Super-Quick way
 
-Then there is a `plotQuick`-Function to get your result in just one line of code:
+Then there are quick-functions to get your result in just one line of code:
 
-`<script>plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>`
+`<script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>`
 
 or
 
-`<script>plotQuick('Math.sin(x)', -3.14, 3.14);</script>`
+`<script>quickFunk('Math.sin(x)', -3.14, 3.14);</script>`
 
 
 ### The more powerful way
@@ -58,16 +56,20 @@ All the arguments are all optional and can be checked in the comment in the top 
  */
 ```
 
-See examples for more info!
+Once you have your plotLine-object add as many graphs as you like with
+
+`pl.addGraph('name', 'green')` where `green` must be a valid CSS color.
+
+Then add data with somethig like `pl.addPoints('name', [[0,2],[2,2]])` or a mathematical function with something like `pl.addFunction('name', 'Math.sin(x)', -3, 3.14)`.
+
+Finally execute `pl.draw()` to draw it.
 
 _Note:_ One plotLine object corresponds to one holder.
 
-Then, you can add as many graphs as you want, with `pl.addGraph(NAME, COLOR);` where COLOR must be a valid CSS color.
+Then, you can add as many graphs as you want, with `pl.addGraph(NAME, COLOR);` 
 And you can add points using `pl.addPoints(GRAPH_NAME, POINTS);`.
 
 _Note:_ You don't have to sort the points inside a same list of points in a pl.addGraph call. They will be sorted for you. But, if you call pl.addPoints multiple times, you must sort the points yourself between each call. The script won't do it for you and it will result in weird graphs if you don't do it.
-
-Finally, you can draw the plotLine with `pl.draw();`.
 
 ### For Pro's: Show diagrams on new `innerHTML`
 
@@ -108,7 +110,7 @@ If `yourContentIncludingPlot` is nested you will still need to implement recursi
 
 ```
  * --------------------------------------------------------------------------------
- * "THE NO-ALCOHOL BEER-WARE LICENSE" (Revision 42):
+ * "THE [NO-ALCOHOL] BEER-WARE LICENSE" (Revision 42):
  * Phyks (webmaster@phyks.me) and polarwinkel (it@polarwinkel.de) wrote this file.
  * As long as you retain this notice you can do whatever you want with this stuff 
  * (and you can also do whatever you want with this stuff without retaining it, but
@@ -124,13 +126,11 @@ This is forked from Timeline.js from Phyks:
 https://github.com/Phyks/timeline.js
 Thanks a lot for this, Phyks!
 
-Much of his code is unchanged, I added some stuff like axis labels, function plotting, some options and more.
+Much of his code is unchanged, I added some stuff like axis labels, function plotting, quick-functions, some options and more.
 I removed labels for the data points.
 
 ## Known bugs / TODO
 
-__This is still work in progress, the api might change during 2022!__
-
-Maybe someday I will add support for bar diagrams.
+Maybe some day I will add support for bar diagrams.
 
 Feel free to contribute!

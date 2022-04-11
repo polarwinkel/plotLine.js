@@ -18,10 +18,10 @@ function refresh() {
     out.prepend(newScript);
 }
         </script>
-        <textarea id="in" style="width: 400px; height: 10em;">plotQuick([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);
+        <textarea id="in" style="width: 72em; height: 10em; font-size:1.4em;">quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);
 
-plotQuick('3*Math.sin(x)', -3.14, 3.14);</textarea><br />
-        <button onclick="refresh();">Run the Code</button><br />
+quickFunc('3*Math.sin(x)', -3.14, 3.14);</textarea><br />
+        <button onclick="refresh();" style="font-size:1.4em; height: 2em;">Run the Code</button><br />
         <div id="out" style="background-color: #eee; padding:10px;">
             <p>(see you result here)</p>
         </div>

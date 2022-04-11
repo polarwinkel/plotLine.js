@@ -1,34 +1,43 @@
 /* plotLine.js
- * v1.0.1-dev
+ * v1.1.0-dev
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
  * Authors: Phyks (http://phyks.me), Dirk Winkel (https://polarwinkel.de)
 
  * --------------------------------------------------------------------------------
- * "THE NO-ALCOHOL BEER-WARE LICENSE" (Revision 42):
+ * "THE [NO-ALCOHOL] BEER-WARE LICENSE" (Revision 42):
  * Phyks (webmaster@phyks.me) and polarwinkel (it@polarwinkel.de) wrote this file.
  * As long as you retain this notice you can do whatever you want with this stuff 
  * (and you can also do whatever you want with this stuff without retaining it, but
  * that's not cool...). If we meet some day, and you think this stuff is worth it,
  * you can buy me a soda (Phyks) or a beer (polarwinkel) in return.
- * Phyks, polarwinkel
+ * Phyks, Dirk Winkel
  * ---------------------------------------------------------------------------------
  */
 
-/* Initialization :
- * arg is an object with :
- * id = id of the parent block
- * height / width = size of the svg (default 600px 450px)
- * line = none / _line_ / dashed to choose line type
- * grid = _main_ / small / both / none to show grid
- * x_axis = _true_ / false to show or hide x axis (boolean)
- * y_axis = _true_ / false to show or hide y axis (boolean)
- * x_label = _true_ / false to show or hide x labels (boolean)
- * y_label = _true_ / false to show or hide y labels (boolean)
- * drawpoints = true / false to draw points (boolean)
- * smooth = true / _false_ to use splines to smoothen the graph (boolean)
- * fill = true / _false_ to fill below the graph or not (boolean)
+/* usage:
+ * quickPlot(data, color='green', arg={}) to plot data inline like [[0,2],[2,2]]
+ * quickFunc(func, min=0, max=1, arg={}) to plot a function like 'Math.sin(x)'
+ * 
+ * pl = plotLine(arg = {}) to create a plotline-object 'pl'
+ * pl.addGraph('name', 'green') to add a graph 'name' to 'pl'
+ * pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
+ * pl.addFunction('name', 'Math.sin(x)', -3, 3.14) to add a function
+ * pl.draw() to draw it
+ * 
+ * arg is an object with:
+ * - id = id of the parent block
+ * - height / width = size of the svg (default 600px 450px)
+ * - line = none / _line_ / dashed to choose line type
+ * - grid = _main_ / small / both / none to show grid
+ * - x_axis = _true_ / false to show or hide x axis (boolean)
+ * - y_axis = _true_ / false to show or hide y axis (boolean)
+ * - x_label = _true_ / false to show or hide x labels (boolean)
+ * - y_label = _true_ / false to show or hide y labels (boolean)
+ * - drawpoints = true / false to draw points (boolean)
+ * - smooth = true / _false_ to use splines to smoothen the graph (boolean)
+ * - fill = true / _false_ to fill below the graph or not (boolean)
  */
 
 function randId() {
@@ -40,28 +49,19 @@ function randId() {
     return id;
 }
 
-function plotQuick(data, a=0, b=1, c={}) {
-    if (typeof data == 'object') {
-        if (typeof a === typeof {}) {
-            var arg = a;
-            console.log(arg); // TODO: set defaults, pass on
-        }
-        pl = new plotLine()
-        pl.addGraph('plot', 'green');
-        pl.addPoints('plot', data);
-        pl.draw();
-    } else if (typeof data == 'string') {
-        if (typeof c === typeof {}) {
-            var arg = c;
-            console.log(arg); // TODO: set defaults, pass on
-        }
-        pl = new plotLine(arg = {'drawpoints': false, 'smooth': true});
-        pl.addGraph('plot', 'green');
-        pl.addFunction('plot', data, a, b);
-        pl.draw();
-    } else {
-        console.log('syntax error in plotQuick');
-    }
+function quickPlot(data, color='green', arg={}) {
+    pl = new plotLine(arg)
+    pl.addGraph('plot', color);
+    pl.addPoints('plot', data);
+    pl.draw();
+}
+function quickFunc(func, min=0, max=1, arg={}) {
+    if (arg.drawpoints === undefined) arg.drawpoints = false;
+    if (arg.smooth === undefined) arg.smooth = true;
+    pl = new plotLine(arg);
+    pl.addGraph('plot', 'green');
+    pl.addFunction('plot', func, min, max);
+    pl.draw();
 }
 
 function plotLine(arg = {}) {
