@@ -17,27 +17,29 @@
  */
 
 /* usage:
- * quickPlot(data, color='green', arg={}) to plot data inline like [[0,2],[2,2]]
- * quickFunc(func, min=0, max=1, arg={}) to plot a function like 'Math.sin(x)'
+ * quickPlot(data, arg={}) to plot data inline like [[0,2],[2,2]]
+ * quickFunc(func, min=0, max=1, n=100, arg={}) to plot a function like 'Math.sin(x)'
  * 
  * pl = plotLine(arg = {}) to create a plotline-object 'pl'
- * pl.addGraph('name', 'green') to add a graph 'name' to 'pl'
+ *   where arg is an object with (optional):
+ *   - id = id of the parent block
+ *   - height / width = size of the svg (default 600px 450px)
+ *   - grid = _main_ / small / both / none to show grid
+ *   - x_axis = _true_ / false to show or hide x axis (boolean)
+ *   - y_axis = _true_ / false to show or hide y axis (boolean)
+ *   - x_label = _true_ / false to show or hide x labels (boolean)
+ *   - y_label = _true_ / false to show or hide y labels (boolean)
+ * pl.addGraph('name', arg={'color': 'green') to add a graph 'name' to 'pl'
+ *   where arg is an object with (optional):
+ *   - color = css-color
+ *   - line = none / _line_ / dashed to choose line type
+ *   - drawpoints = true / false to draw points (boolean)
+ *   - smooth = true / _false_ to use splines to smoothen the graph (boolean)
+ *   - fill = true / _false_ to fill below the graph or not (boolean)
  * pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
  * pl.addFunction('name', 'Math.sin(x)', -3, 3.14) to add a function
  * pl.draw() to draw it
  * 
- * arg is an object with:
- * - id = id of the parent block
- * - height / width = size of the svg (default 600px 450px)
- * - line = none / _line_ / dashed to choose line type
- * - grid = _main_ / small / both / none to show grid
- * - x_axis = _true_ / false to show or hide x axis (boolean)
- * - y_axis = _true_ / false to show or hide y axis (boolean)
- * - x_label = _true_ / false to show or hide x labels (boolean)
- * - y_label = _true_ / false to show or hide y labels (boolean)
- * - drawpoints = true / false to draw points (boolean)
- * - smooth = true / _false_ to use splines to smoothen the graph (boolean)
- * - fill = true / _false_ to fill below the graph or not (boolean)
  */
 
 function randId() {
@@ -49,18 +51,18 @@ function randId() {
     return id;
 }
 
-function quickPlot(data, color='green', arg={}) {
+function quickPlot(data, arg={}) {
     pl = new plotLine(arg)
-    pl.addGraph('plot', color);
+    pl.addGraph('plot', arg);
     pl.addPoints('plot', data);
     pl.draw();
 }
-function quickFunc(func, min=0, max=1, arg={}) {
+function quickFunc(func, min=0, max=1, n=100, arg={}) {
     if (arg.drawpoints === undefined) arg.drawpoints = false;
     if (arg.smooth === undefined) arg.smooth = true;
     pl = new plotLine(arg);
-    pl.addGraph('plot', 'green');
-    pl.addFunction('plot', func, min, max);
+    pl.addGraph('plot', arg);
+    pl.addFunction('plot', func, min, max, n);
     pl.draw();
 }
 
@@ -68,15 +70,11 @@ function plotLine(arg = {}) {
     // set values
     if (arg.height === undefined) {this.height = '450px'} else {this.height = arg.height};
     if (arg.width === undefined) {this.width = '600px'} else {this.width = arg.width};
-    if (arg.line === undefined) {this.line = 'line'} else {this.line = arg.line};
     if (arg.grid === undefined) {this.grid = 'main'} else {this.grid = arg.grid};
     if (arg.x_axis === undefined) {this.x_axis = true} else {this.x_axis = arg.x_axis};
     if (arg.y_axis === undefined) {this.y_axis = true} else {this.y_axis = arg.y_axis};
     if (arg.x_label === undefined) {this.x_label = true} else {this.x_label = arg.x_label};
     if (arg.y_label === undefined) {this.y_label = true} else {this.y_label = arg.y_label};
-    if (arg.drawpoints === undefined) {this.drawpoints = true} else {this.drawpoints = arg.drawpoints};
-    if (arg.smooth === undefined) {this.smooth = false} else {this.smooth = arg.smooth};
-    if (arg.fill === undefined) {this.fill = false} else {this.hfill = arg.fill};
     
     this.marginBottom = 10;
     this.marginTop = 10;
@@ -89,8 +87,8 @@ function plotLine(arg = {}) {
     this.graphs = [];
     this.raw_points = [];
     
-    var old = window.onresize || function () {};
-    var obj = this;
+    //var old = window.onresize || function () {};
+    //var obj = this;
     
     this.ns = "http://www.w3.org/2000/svg";
     this.xlinkns = "http://www.w3.org/1999/xlink";
@@ -98,10 +96,10 @@ function plotLine(arg = {}) {
     if(!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1")) {
         alert("ERROR : Your browser does not support embedded SVG.");
     }
-    window.onresize = function() {
-        old();
-        obj.resize(obj.parent_holder.offsetWidth, obj.parent_holder.offsetHeight);
-    }
+    //window.onresize = function() {
+    //    old();
+    //    obj.resize(obj.parent_holder.offsetWidth, obj.parent_holder.offsetHeight);
+    //}
     
     // add div-container in-place if no parent-id is given
     if (arg.id === undefined){
@@ -175,7 +173,7 @@ function plotLine(arg = {}) {
 }
 
 // Resize the SVG
-plotLine.prototype.resize = function(new_width, new_height) {
+/*plotLine.prototype.resize = function(new_width, new_height) {
     if(this.g !== false) {
         this.g.setAttribute('transform', 'translate(0, ' + new_height + ') scale(1, -1)');
         if(this.x_axis === true) {
@@ -189,7 +187,7 @@ plotLine.prototype.resize = function(new_width, new_height) {
         });
         this.draw();
     }
-};
+};*/
 
 // Create an element "element" with the attributes "attrs"
 plotLine.prototype.createElement = function (element, attrs) {
@@ -206,9 +204,14 @@ plotLine.prototype.hasClass = function (element, cls) {
 };
 
 // Add a new graph to the plotLine
-plotLine.prototype.addGraph = function (graph, color) {
-    this.graphs[graph] = color;
-    // TODO: accept line, drawpoints, smooth, fill for graphs
+plotLine.prototype.addGraph = function (graph, arg={}) {
+    var settings = {};
+    if (arg.color === undefined) {settings.color = 'green'} else {settings.color = arg.color};
+    if (arg.line === undefined) {settings.line = 'line'} else {settings.line = arg.line};
+    if (arg.drawpoints === undefined) {settings.drawpoints = true} else {settings.drawpoints = arg.drawpoints};
+    if (arg.smooth === undefined) {settings.smooth = false} else {settings.smooth = arg.smooth};
+    if (arg.fill === undefined) {settings.fill = false} else {settings.fill = arg.fill};
+    this.graphs[graph] = settings;
 };
 
 // Test wether a graph of name "graph" already exists
@@ -256,7 +259,7 @@ plotLine.prototype.addPoints = function (graph, data) {
 };
 
 // Add a function to the specified graph
-plotLine.prototype.addFunction = function (graph, func, x_min=-10, x_max=10, n=100) {
+plotLine.prototype.addFunction = function (graph, func, x_min=-10, x_max=10, n=100, args={}) {
     for(var point = 0; point <= n; point++) {
         var x = x_min+(x_max-x_min)/n*point;
         const F = new Function('x', 'return ' + func);
@@ -446,7 +449,7 @@ plotLine.prototype.scale = function(data) {
 };
 
 // draw graphs
-plotLine.prototype.draw = function(drawp = this.drawpoints) {
+plotLine.prototype.draw = function() {
     var scale = this.scale(this.raw_points);
     var points = [], path;
     var px, py;
@@ -464,7 +467,7 @@ plotLine.prototype.draw = function(drawp = this.drawpoints) {
         path = '';
 
         // draw line
-        if(this.smooth === true) {
+        if(this.graphs[graph].smooth === true) {
             var x = new Array(), y = new Array();
             for(var point = 0; point < filtered_points.length; point++) {
                 x.push(filtered_points[point].x);
@@ -482,28 +485,28 @@ plotLine.prototype.draw = function(drawp = this.drawpoints) {
             }
         }
 
-        if(this.line !== 'none' && filtered_points.length !== 0) {
-            element = this.createElement('path', {'class': 'line', 'stroke': this.graphs[graph], 'stroke-width': 2, 'fill': 'none', 'd': 'M '+filtered_points[0].x+' '+filtered_points[0].y+' '+path});
-            if(this.line === 'dashed') {
+        if(this.graphs[graph].line !== 'none' && filtered_points.length !== 0) {
+            element = this.createElement('path', {'class': 'line', 'stroke': this.graphs[graph].color, 'stroke-width': 2, 'fill': 'none', 'd': 'M '+filtered_points[0].x+' '+filtered_points[0].y+' '+path});
+            if(this.graphs[graph].line === 'dashed') {
                 element.setAttribute('style', 'stroke-dasharray: '+this.dashed_style);
             }
             this.g.appendChild(element);
         }
 
         // draw fill
-        if(this.fill) {
-            element = this.createElement('path', {'class': 'graph', 'fill': this.graphs[graph], 'opacity': '0.25', 'stroke': 'none', 'd': 'M '+filtered_points[0].x+' '+2*this.marginBottom+' L '+filtered_points[0].x+' '+filtered_points[0].y+' '+ path + ' L '+filtered_points[filtered_points.length - 1].x+' '+2*this.marginBottom+' Z' });
+        if(this.graphs[graph].fill) {
+            element = this.createElement('path', {'class': 'graph', 'fill': this.graphs[graph].color, 'opacity': '0.25', 'stroke': 'none', 'd': 'M '+filtered_points[0].x+' '+2*this.marginBottom+' L '+filtered_points[0].x+' '+filtered_points[0].y+' '+ path + ' L '+filtered_points[filtered_points.length - 1].x+' '+2*this.marginBottom+' Z' });
             this.g.insertBefore(element, this.g.querySelectorAll('.over')[0]);
         }
     }
     
     // draw points if true
-    if (this.drawpoints === true) {
-        for(var graph in this.graphs) {
+    for(var graph in this.graphs) {
+        if (this.graphs[graph].drawpoints === true) {
             var filtered_points = points.filter(function(el) { return el.graph == graph; });
     
             for(var point = 0; point < filtered_points.length; point++) {
-                element = this.createElement('circle', {'class': 'point', 'id': 'point_'+filtered_points[point].id, 'cx': filtered_points[point].x, 'cy': filtered_points[point].y, 'r': 4, 'fill': '#333', 'stroke': this.graphs[graph], 'stroke-width': 2});
+                element = this.createElement('circle', {'class': 'point', 'id': 'point_'+filtered_points[point].id, 'cx': filtered_points[point].x, 'cy': filtered_points[point].y, 'r': 4, 'fill': '#333', 'stroke': this.graphs[graph].color, 'stroke-width': 2});
                 this.g.insertBefore(element, this.g.querySelectorAll('.label')[0]);
             }
         }

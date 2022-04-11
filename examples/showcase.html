@@ -21,14 +21,14 @@
     <h2>Plot multiple functions and/or data in one Plot</h2>
     <div id="pl1"></div>
     <script type="text/javascript">
-        var pl1 = new plotLine(arg={'id': 'pl1', 'smooth': false, 'fill': false, 'grid':'both', 'y_label': true, 'drawpoints': false});
-        pl1.addGraph('test1', 'red');
+        var pl1 = new plotLine({'id': 'pl1', 'grid':'both', 'y_label': true});
+        pl1.addGraph('test1', {'color': 'red', 'drawpoints': true, 'smooth': false, 'fill': true});
         pl1.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,-1],[1.57,1],[3.14,0]]);
         
-        pl1.addGraph('test2', 'blue');
+        pl1.addGraph('test2', {'color': 'blue', 'drawpoints': false, 'smooth': true, 'fill': false});
         pl1.addFunction('test2', 'Math.sin(x)', -3, 3.14);
         
-        pl1.addGraph('test3', 'green');
+        pl1.addGraph('test3', {'drawpoints': false, 'fill': false});
         pl1.addFunction('test3', 'x*x*x', -1.1, 1.1);
         
         pl1.draw();
@@ -37,14 +37,35 @@
     <h2>Smoothen Data with a Spline to get a great sin</h2>
     <div id="pl2"></div>
     <script type="text/javascript">
-        var pl2 = new plotLine(arg={'id': 'pl2', 'smooth': true, 'fill': true, 'grid':'main', 'x_label': true, 'y_label': true, 'width': '1000px', 'height': '700px'});
-        pl2.addGraph('test1', 'red');
-        pl2.addPoints('test1', [[0,0],[-3.14, 0],[-1.57,1],[1.57,-1],[3.14,0]]);
+        var pl2 = new plotLine(arg={'id': 'pl2', 'grid':'main', 'x_label': true, 'y_label': true});
+        pl2.addGraph('graph1', {'color': 'red', 'drawpoints': true, 'smooth': false});
+        pl2.addPoints('graph1', [[0,0],[-3.14, 0],[-1.57,1],[1.57,-1],[3.14,0]]);
         
-        pl2.addGraph('test2', 'blue');
-        pl2.addFunction('test2', 'Math.sin(x)', -3.14, 5);
+        pl2.addGraph('graph2', {'color': 'orange', 'drawpoints': true, 'smooth': true});
+        pl2.addPoints('graph2', [[0,0],[-3.14, 0],[-1.57,1],[1.57,-1],[3.14,0]]);
+        
+        pl2.addGraph('graph3', {'color': 'green', 'drawpoints': false, 'smooth': true});
+        pl2.addFunction('graph3', 'Math.sin(x)', -3.14, 5, n=100);
         
         pl2.draw();
+    </script>
+    
+    <h2>Handwork: Line of Best Fit and Gradient Triangle</h2>
+    <div id="pl3"></div>
+    <script type="text/javascript">
+        var pl3 = new plotLine(arg={'id': 'pl3', 'grid':'both', 'x_label': true, 'y_label': true});
+        
+        pl3.addGraph('data', {'color': 'red', 'drawpoints': true, 'smooth': false, 'line': 'none'});
+        pl3.addPoints('data', [[0,1.3],[1,2.4],[2,2.8],[3,3.4],[4,4.7]]);
+        
+        pl3.addGraph('line', {'color': 'green', 'drawpoints': false, 'smooth': false, 'fill': true});
+        pl3.addPoints('line', [[0,1.4],[4,4.5]]);
+        
+        pl3.addGraph('grad', {'color': '#55f', 'drawpoints': false, 'smooth': false, 'line': 'dashed'});
+        pl3.addPoints('grad', [[0.4,1.7],[3.6,1.7]]);
+        pl3.addPoints('grad', [[3.6,1.7],[3.6,4.2]]);
+        
+        pl3.draw();
     </script>
 </body>
 </html>

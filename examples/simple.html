@@ -4,25 +4,29 @@
     <meta charset="utf-8">
     <title>linePlot.js simple example</title>
   </head>
-  <body>
+  <body style="font-size:1.4em;">
     <script type="text/javascript" src="../plotLine.js"></script>
     
     <h1>Simple Examples for <code>plotLine.js</code></h1>
-    <p>To use <code>plotLine.js</code> you just need to copy the file <code>plotLine.js</code> to your project and import the script in your HTML.</p>
+    <p>To use <code>plotLine.js</code> you just need to copy the file <code>plotLine.js</code> to your project and import the script in your HTML:</p>
+    <code>&lt;script type="text/javascript" src="plotLine.js"&gt;&lt;/script&gt;</code>
     <p>Then your first steps are easy-going:</p>
     
     <h2>Plot Data</h2>
     <p>all it takes is</p>
-    <code>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]], 'red');</code>
+    <code>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</code>
     <p> within a <code>script</code>-Tag to get this:</p>
-    <script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]], 'red');</script>
+    <script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>
+    <p>add optional arguments like</p>
+    <code>{'width':'200px', 'height':'150px', 'color':'red', 'fill':true});</code>
+    <p>comma-separated after your data to change the appearance:</p>
+    <script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]], {'width':'200px', 'height':'150px', 'color':'red', 'fill':true});</script>
     
     <h2>Plot a Function</h2>
     <p>To plot a math function it needs to be written as Java-Script.</p>
-    <p>This:</p>
-    <script>quickFunc('3*Math.sin(x)', -3.14, 3.14);</script>
-    <p>is done by the code</p>
     <code>quickFunc('3*Math.sin(x)', -3.14, 3.14);</code>
+    <p>creates this plot:</p>
+    <script>quickFunc('3*Math.sin(x)', -3.14, 3.14);</script>
     
   </body>
 </html>
