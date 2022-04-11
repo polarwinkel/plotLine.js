@@ -42,7 +42,7 @@ You cann also pass an JSON-Object with arguments as described below after the pa
 
 For more options you need to init a plotLine object, using something like `var pl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'x_label': false});`.
 
-All the arguments are optional and can be checked in usage comments of `plotLine.js`:
+All the arguments are optional and are listed in the head-comment of `plotLine.js`:
 
 ```
  * pl = plotLine(arg = {}) to create a plotline-object 'pl'
@@ -56,7 +56,7 @@ All the arguments are optional and can be checked in usage comments of `plotLine
 
 Once you have your plotLine-object add as many graphs as you like with
 
-`pl.addGraph('name', arg={})` where again all arguments are optional and documented in the head comment:
+`pl.addGraph('name', arg={})` where again all arguments are optional and documented in the head-comment:
 
 ```
  * pl.addGraph('name', arg={}) to add a graph 'name' to 'pl'
