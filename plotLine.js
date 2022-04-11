@@ -18,7 +18,7 @@
 
 /* usage:
  * quickPlot(data, arg={}) to plot data inline like [[0,2],[2,2]]
- * quickFunc(func, min=0, max=1, n=100, arg={}) to plot a function like 'Math.sin(x)'
+ * quickFunc(func, min=0, max=10, arg={}) to plot a function like 'Math.sin(x)'
  * pl = plotLine(arg = {}) to create a plotline-object 'pl'
  *   where arg is an object with (optional):
  *   - 'id' = id of the parent block (default: random Id)
@@ -26,15 +26,18 @@
  *   - 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
  *   - 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
  *   - 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
- * pl.addGraph('name', arg={}) to add a graph 'name' to 'pl'
+ * pl.addGraph('name', arg={}) to add a graph 'name' to 'pl', or:
+ * pl.addGraph('name', 'func', minX, maxX, arg={}) to add a function
  *   where arg is an object with (optional):
  *   - 'color = css-color (default: 'green')
  *   - 'line' = _'line'_ / 'dashed' / 'none' to choose line type
  *   - 'drawpoints' = true / false to draw points (boolean)
  *   - 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
  *   - 'fill' = true / _false_ to fill below the graph or not (boolean)
+ *     'func' must be a JS-Function  with x as variable like 'Math.sin(x)' or 'x*x'
  * pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
- * pl.addFunction('name', 'Math.sin(x)', -3, 3.14) to add a function to name-graph
+ * pl.addFunction('name', 'Math.sin(x)', min, max, samples) 
+ *     to add a function to name-graph (default min/max/samples: 0/10/100)
  * pl.draw() to draw it
  */
 
@@ -53,12 +56,13 @@ function quickPlot(data, arg={}) {
     pl.addPoints('plot', data);
     pl.draw();
 }
-function quickFunc(func, min=0, max=1, n=100, arg={}) {
+function quickFunc(func, min=0, max=1, arg={}) {
     if (arg.drawpoints === undefined) arg.drawpoints = false;
     if (arg.smooth === undefined) arg.smooth = true;
+    if (arg.samples === undefined) arg.samples = 100;
     pl = new plotLine(arg);
     pl.addGraph('plot', arg);
-    pl.addFunction('plot', func, min, max, n);
+    pl.addFunction('plot', func, min, max, arg.samples);
     pl.draw();
 }
 
@@ -255,9 +259,10 @@ plotLine.prototype.addPoints = function (graph, data) {
 };
 
 // Add a function to the specified graph
-plotLine.prototype.addFunction = function (graph, func, x_min=-10, x_max=10, n=100, args={}) {
-    for(var point = 0; point <= n; point++) {
-        var x = x_min+(x_max-x_min)/n*point;
+plotLine.prototype.addFunction = function (graph, func, x_min=0, x_max=10, samples=100) {
+    if (samples === undefined) samples = 100;
+    for(var point = 0; point <= samples; point++) {
+        var x = x_min+(x_max-x_min)/samples*point;
         const F = new Function('x', 'return ' + func);
         var y = F(x);
         var insert = {'graph': graph, 'x': x, 'y': y};

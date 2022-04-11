@@ -24,14 +24,19 @@ You must include the `plotLine.js` script with something like
 
 ### The Super-Quick way
 
-Then there are quick-functions to get your result in just one line of code:
+There are quick-functions to get your result in just one line of code:
 
 `<script>quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);</script>`
 
-or
+to plot data or
 
 `<script>quickFunk('Math.sin(x)', -3.14, 3.14);</script>`
 
+to plot a mathematical function.
+
+You cann also pass an JSON-Object with arguments as described below after the parameters, i.e.
+
+`<script>quickFunk('x*x', -1, 1, {'color': 'red', 'samples':10});</script>`
 
 ### The more powerful way
 
@@ -47,7 +52,6 @@ All the arguments are optional and can be checked in usage comments of `plotLine
  *   - 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
  *   - 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
  *   - 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
- */
 ```
 
 Once you have your plotLine-object add as many graphs as you like with

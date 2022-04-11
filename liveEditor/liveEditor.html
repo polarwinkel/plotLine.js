@@ -18,6 +18,8 @@ function refresh() {
     out.prepend(newScript);
 }
         </script>
+        <h1><code>plotLine.js</code> Live Editor</h1>
+        <p>Enter your JS-Code below and click 'Run the Code' to execute it.</p>
         <textarea id="in" style="width: 72em; height: 10em; font-size:1.4em;">quickPlot([[0,1.5],[1.5,2.1],[2,0.5],[2.5,2.8],[3,2],[4,3.5]]);
 
 quickFunc('3*Math.sin(x)', -3.14, 3.14);</textarea><br />
@@ -25,5 +27,30 @@ quickFunc('3*Math.sin(x)', -3.14, 3.14);</textarea><br />
         <div id="out" style="background-color: #eee; padding:10px;">
             <p>(see you result here)</p>
         </div>
+        <h2>Usage:</h2>
+        <textarea style="width: 72em; height: 30em; font-size:1em;" disabled>
+quickPlot(data, arg={}) to plot data inline like [[0,2],[2,2]]
+quickFunc(func, min=0, max=10, arg={}) to plot a function like 'Math.sin(x)'
+pl = plotLine(arg = {}) to create a plotline-object 'pl'
+where arg is an object with (optional):
+- 'id' = id of the parent block (default: random Id)
+- 'height' / 'width' = size of the svg (default '600px' / '450px')
+- 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
+- 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
+- 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
+pl.addGraph('name', arg={}) to add a graph 'name' to 'pl', or:
+pl.addGraph('name', 'func', minX, maxX, arg={}) to add a function
+where arg is an object with (optional):
+- 'color = css-color (default: 'green')
+- 'line' = _'line'_ / 'dashed' / 'none' to choose line type
+- 'drawpoints' = true / false to draw points (boolean)
+- 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
+- 'fill' = true / _false_ to fill below the graph or not (boolean)
+    'func' must be a JS-Function  with x as variable like 'Math.sin(x)' or 'x*x'
+pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
+pl.addFunction('name', 'Math.sin(x)', min, max, samples) 
+    to add a function to name-graph (default min/max/samples: 0/10/100)
+pl.draw() to draw it
+        </textarea>
     </body>
 </html>
