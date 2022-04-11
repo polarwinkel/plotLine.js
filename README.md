@@ -2,9 +2,9 @@
 
 `plotLine.js` is a lightweight JS library to plot data and function graphs using `svg`-output.
 
-`plotLine.js` is a (api-breaking) fork of [Timeline.js from Phyks](https://github.com/Phyks/timeline.js).
+This was forked from [Timeline.js from Phyks](https://github.com/Phyks/timeline.js).
 
-I forked/coded it because I couldn't find any other basic JS library to do this, without any external dependencies and extra features. It is only <20kB not yet minified, and can be reduced under 10k with obfuscation. It can be very easily customised to fit your needs.
+I forked/coded it because I couldn't find any other basic JS library to do this, without any external dependencies and extra features. It is only ~20kB not yet minified, and can be reduced under 10k with obfuscation. It can be very easily customised to fit your needs.
 
 ## Live demos
 
@@ -119,8 +119,9 @@ If `yourContentIncludingPlot` is nested you will still need to implement recursi
 
 ## Credits
 
-This is forked from [Timeline.js from Phyks](https://github.com/Phyks/timeline.js)
-Thanks a lot for this, Phyks!
+This is forked from [Timeline.js from Phyks](https://github.com/Phyks/timeline.js).
+
+Good job, thanks a lot for this, Phyks!
 
 Much of his code is unchanged, I added some stuff like axis labels, function plotting, quick-functions, some options and more.
 I removed labels for the data points.
