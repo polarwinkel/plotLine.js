@@ -22,24 +22,21 @@
  * 
  * pl = plotLine(arg = {}) to create a plotline-object 'pl'
  *   where arg is an object with (optional):
- *   - id = id of the parent block
- *   - height / width = size of the svg (default 600px 450px)
- *   - grid = _main_ / small / both / none to show grid
- *   - x_axis = _true_ / false to show or hide x axis (boolean)
- *   - y_axis = _true_ / false to show or hide y axis (boolean)
- *   - x_label = _true_ / false to show or hide x labels (boolean)
- *   - y_label = _true_ / false to show or hide y labels (boolean)
- * pl.addGraph('name', arg={'color': 'green') to add a graph 'name' to 'pl'
+ *   - 'id' = id of the parent block (default: random Id)
+ *   - 'height' / 'width' = size of the svg (default '600px' / '450px')
+ *   - 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
+ *   - 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
+ *   - 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
+ * pl.addGraph('name', arg={}) to add a graph 'name' to 'pl'
  *   where arg is an object with (optional):
- *   - color = css-color
- *   - line = none / _line_ / dashed to choose line type
- *   - drawpoints = true / false to draw points (boolean)
- *   - smooth = true / _false_ to use splines to smoothen the graph (boolean)
- *   - fill = true / _false_ to fill below the graph or not (boolean)
+ *   - 'color = css-color (default: 'green')
+ *   - 'line' = _'line'_ / 'dashed' / 'none' to choose line type
+ *   - 'drawpoints' = true / false to draw points (boolean)
+ *   - 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
+ *   - 'fill' = true / _false_ to fill below the graph or not (boolean)
  * pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
- * pl.addFunction('name', 'Math.sin(x)', -3, 3.14) to add a function
+ * pl.addFunction('name', 'Math.sin(x)', -3, 3.14) to add a function to name-graph
  * pl.draw() to draw it
- * 
  */
 
 function randId() {
@@ -87,8 +84,8 @@ function plotLine(arg = {}) {
     this.graphs = [];
     this.raw_points = [];
     
-    //var old = window.onresize || function () {};
-    //var obj = this;
+    var old = window.onresize || function () {};
+    var obj = this;
     
     this.ns = "http://www.w3.org/2000/svg";
     this.xlinkns = "http://www.w3.org/1999/xlink";
@@ -96,10 +93,10 @@ function plotLine(arg = {}) {
     if(!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1")) {
         alert("ERROR : Your browser does not support embedded SVG.");
     }
-    //window.onresize = function() {
-    //    old();
-    //    obj.resize(obj.parent_holder.offsetWidth, obj.parent_holder.offsetHeight);
-    //}
+    window.onresize = function() {
+        old();
+        obj.resize(obj.parent_holder.offsetWidth, obj.parent_holder.offsetHeight);
+    }
     
     // add div-container in-place if no parent-id is given
     if (arg.id === undefined){
@@ -173,7 +170,7 @@ function plotLine(arg = {}) {
 }
 
 // Resize the SVG
-/*plotLine.prototype.resize = function(new_width, new_height) {
+plotLine.prototype.resize = function(new_width, new_height) {
     if(this.g !== false) {
         this.g.setAttribute('transform', 'translate(0, ' + new_height + ') scale(1, -1)');
         if(this.x_axis === true) {
@@ -187,7 +184,7 @@ function plotLine(arg = {}) {
         });
         this.draw();
     }
-};*/
+};
 
 // Create an element "element" with the attributes "attrs"
 plotLine.prototype.createElement = function (element, attrs) {
