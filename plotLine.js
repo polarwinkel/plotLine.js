@@ -1,5 +1,5 @@
 /* plotLine.js
- * v1.1.0-dev
+ * v1.1.0
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
@@ -19,7 +19,6 @@
 /* usage:
  * quickPlot(data, arg={}) to plot data inline like [[0,2],[2,2]]
  * quickFunc(func, min=0, max=1, n=100, arg={}) to plot a function like 'Math.sin(x)'
- * 
  * pl = plotLine(arg = {}) to create a plotline-object 'pl'
  *   where arg is an object with (optional):
  *   - 'id' = id of the parent block (default: random Id)

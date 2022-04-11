@@ -35,30 +35,34 @@ or
 
 ### The more powerful way
 
-For more options you need to init a plotLine object, using something like `var pl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'smooth': false, 'x_label': false});`.
+For more options you need to init a plotLine object, using something like `var pl = new plotLine({'id': 'holder', 'height': '100%', 'width': '100%', 'grid': 'both', 'x_axis': true, 'x_label': false});`.
 
-All the arguments are optional and can be checked in head comments of `plotLine.js`:
+All the arguments are optional and can be checked in usage comments of `plotLine.js`:
 
 ```
-/* Initialization :
- * arg is an object with :
- * id = id of the parent block
- * height / width = size of the svg (default 600px 450px)
- * line = none / _line_ / dashed to choose line type
- * grid = _main_ / small / both / none to show grid
- * x_axis = _true_ / false to show or hide x axis (boolean)
- * y_axis = _true_ / false to show or hide y axis (boolean)
- * x_label = _true_ / false to show or hide x labels (boolean)
- * y_label = _true_ / false to show or hide y labels (boolean)
- * drawpoints = true / false to draw points (boolean)
- * smooth = true / _false_ to use splines to smoothen the graph (boolean)
- * fill = true / _false_ to fill below the graph or not (boolean)
+ * pl = plotLine(arg = {}) to create a plotline-object 'pl'
+ *   where arg is an object with (optional):
+ *   - 'id' = id of the parent block (default: random Id)
+ *   - 'height' / 'width' = size of the svg (default '600px' / '450px')
+ *   - 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
+ *   - 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
+ *   - 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
  */
 ```
 
 Once you have your plotLine-object add as many graphs as you like with
 
-`pl.addGraph('name', 'green')` where `green` must be a valid CSS color.
+`pl.addGraph('name', arg={})` where again all arguments are optional and documented in the head comment:
+
+```
+ * pl.addGraph('name', arg={}) to add a graph 'name' to 'pl'
+ *   where arg is an object with (optional):
+ *   - 'color = css-color (default: 'green')
+ *   - 'line' = _'line'_ / 'dashed' / 'none' to choose line type
+ *   - 'drawpoints' = true / false to draw points (boolean)
+ *   - 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
+ *   - 'fill' = true / _false_ to fill below the graph or not (boolean)
+```
 
 Then add data with somethig like `pl.addPoints('name', [[0,2],[2,2]])` or a mathematical function with something like `pl.addFunction('name', 'Math.sin(x)', -3, 3.14)`.
 
