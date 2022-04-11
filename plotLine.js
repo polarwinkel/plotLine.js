@@ -38,7 +38,7 @@
  * pl.draw() to draw it
  */
 
-const version = 'v1.1.3'
+const version = 'v1.1.2'
 
 // create all necessary stuff for a data-plot with just one command
 function quickPlot(data, arg={}) {
