@@ -34,7 +34,7 @@ to plot data or
 
 to plot a mathematical function.
 
-You cann also pass an JSON-Object with arguments as described below after the parameters, i.e.
+You can also pass a JSON-Object with arguments as described below after the parameters, i.e.
 
 `<script>quickFunk('x*x', -1, 1, {'color': 'red', 'samples':10});</script>`
 
