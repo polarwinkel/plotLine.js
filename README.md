@@ -63,9 +63,10 @@ Once you have your plotLine-object add as many graphs as you like with
  *   where arg is an object with (optional):
  *   - 'color = css-color (default: 'green')
  *   - 'line' = _'line'_ / 'dashed' / 'none' to choose line type
- *   - 'drawpoints' = true / false to draw points (boolean)
- *   - 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
- *   - 'fill' = true / _false_ to fill below the graph or not (boolean)
+ *   - 'drawpoints' = true / false to draw points (plot: _true_, func: _false_)
+ *   - 'smooth' = true / _false_ to use splines to smoothen the graph
+ *   - 'fill' = true / _false_ to fill below the graph or not
+ *   - 'samples' = _100_ to set samples for function-plots
 ```
 
 Then add data with somethig like `pl.addPoints('name', [[0,2],[2,2]])` or a mathematical function with something like `pl.addFunction('name', 'Math.sin(x)', -3, 3.14)`.

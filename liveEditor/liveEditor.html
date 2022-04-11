@@ -38,19 +38,17 @@ where arg is an object with (optional):
 - 'grid' = _'main'_ / 'small' / 'both' / 'none' to show grid
 - 'x_axis' / 'y_axis' = _true_ / false to show or hide x / y axis
 - 'x_label' / 'y_label' = _true_ / false to show or hide x / y labels
-pl.addGraph('name', arg={}) to add a graph 'name' to 'pl', or:
-pl.addGraph('name', 'func', minX, maxX, arg={}) to add a function
+pl.addGraph('name', arg={}) to add a graph 'name' to 'pl'
 where arg is an object with (optional):
 - 'color = css-color (default: 'green')
 - 'line' = _'line'_ / 'dashed' / 'none' to choose line type
-- 'drawpoints' = true / false to draw points (boolean)
-- 'smooth' = true / _false_ to use splines to smoothen the graph (boolean)
-- 'fill' = true / _false_ to fill below the graph or not (boolean)
-    'func' must be a JS-Function  with x as variable like 'Math.sin(x)' or 'x*x'
-pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name'
-pl.addFunction('name', 'Math.sin(x)', min, max, samples) 
-    to add a function to name-graph (default min/max/samples: 0/10/100)
+- 'drawpoints' = true / false to draw points (plot: _true_, func: _false_)
+- 'smooth' = true / _false_ to use splines to smoothen the graph
+- 'fill' = true / _false_ to fill below the graph or not
+- 'samples' = _100_ to set samples for function-plots
+pl.addPoints('name', [[0,2],[2,2]]) to add points to the graph 'name' or
+pl.addFunc('name', 'func', min=0, max=10) to add a function
 pl.draw() to draw it
-        </textarea>
+</textarea>
     </body>
 </html>
