@@ -1,5 +1,4 @@
 /* plotLine.js
- * v1.1.1
  * published and maintained by Dirk Winkel (https://polarwinkel.de)
  * https://github.com/polarwinkel/plotLine.js
  * This is forked from Timeline.js from Phyks
@@ -38,6 +37,8 @@
  * pl.addFunc('name', 'func', min=0, max=10) to add a function
  * pl.draw() to draw it
  */
+
+const version = 'v1.1.3'
 
 // create all necessary stuff for a data-plot with just one command
 function quickPlot(data, arg={}) {
