@@ -30,13 +30,13 @@ There are quick-functions to get your result in just one line of code:
 
 to plot data or
 
-`<script>quickFunk('Math.sin(x)', -3.14, 3.14);</script>`
+`<script>quickFunc('Math.sin(x)', -3.14, 3.14);</script>`
 
 to plot a mathematical function.
 
 You can also pass a JSON-Object with arguments as described below after the parameters, i.e.
 
-`<script>quickFunk('x*x', -1, 1, {'color': 'red', 'samples':10});</script>`
+`<script>quickFunc('x*x', -1, 1, {'color': 'red', 'samples':10});</script>`
 
 ### The more powerful way
 

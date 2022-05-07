@@ -414,13 +414,22 @@ plotLine.prototype.scale = function(data) {
     // draw axis labels if set to true
     if (this.x_label === true) {
         var scalewidth = {'x': tmp.x - origin.x, 'y': tmp.y - origin.y };
-        var interval = Math.round(scalewidth.x/(scale(1,0).x-scale(0,0).x));
+        var interval = scalewidth.x/(scale(1,0).x-scale(0,0).x);
+        if (Math.round(interval)>=1) {
+            interval = Math.round(interval);
+        } else {
+            interval = interval.toFixed(Math.round(-Math.log(interval)-1));
+        }
         var i=-10;
         while (origin.x+i*scalewidth.x < this.parent_holder.offsetWidth) {
             i++;
             if (origin.x+i*scalewidth.x <0) continue;
             label = this.createElement('text', {'class': 'legend_x', 'fill': 'gray', 'transform': 'translate(0, '+this.parent_holder.offsetHeight+') scale(1, -1)'});
-            label.appendChild(document.createTextNode(i*interval));
+            if (interval>=1) {
+                label.appendChild(document.createTextNode(i*interval));
+            } else {
+                label.appendChild(document.createTextNode((i*interval).toFixed(-Math.log(interval)-1)));
+            }
             label.setAttribute('x', origin.x+i*scalewidth.x);
             label.setAttribute('y', this.parent_holder.offsetHeight-origin.y-5);
             this.g.appendChild(label);
@@ -428,13 +437,22 @@ plotLine.prototype.scale = function(data) {
     }
     if (this.y_label === true) {
         var scalewidth = {'x': tmp.x - origin.x, 'y': tmp.y - origin.y };
-        var interval = Math.round(scalewidth.y/(scale(0,0).y-scale(0,1).y));
+        var interval = scalewidth.y/(scale(0,1).y-scale(0,0).y);
+        if (Math.round(interval)>=1) {
+            interval = Math.round(interval);
+        } else {
+            interval = interval.toFixed(Math.round(-Math.log(interval)-1));
+        }
         var i=-10;
         while (origin.y+i*scalewidth.y < this.parent_holder.offsetHeight) {
             i++;
             if (origin.y+i*scalewidth.y <0) continue;
             label = this.createElement('text', {'class': 'legend_y', 'fill': 'gray', 'transform': 'translate(0, '+this.parent_holder.offsetHeight+') scale(1, -1)'});
-            label.appendChild(document.createTextNode(-i*interval));
+            if (interval>=1) {
+                label.appendChild(document.createTextNode(i*interval));
+            } else {
+                label.appendChild(document.createTextNode((i*interval).toFixed(-Math.log(interval)-1)));
+            }
             label.setAttribute('x', origin.x+5);
             label.setAttribute('y', this.parent_holder.offsetHeight-origin.y-i*scalewidth.y);
             this.g.appendChild(label);
