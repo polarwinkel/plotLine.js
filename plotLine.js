@@ -38,7 +38,7 @@
  * pl.draw() to draw it
  */
 
-const version = 'v1.1.2'
+const version = 'v1.1.3'
 
 // create all necessary stuff for a data-plot with just one command
 function quickPlot(data, arg={}) {
@@ -453,7 +453,11 @@ plotLine.prototype.scale = function(data) {
             } else {
                 label.appendChild(document.createTextNode((i*interval).toFixed(-Math.log(interval)-1)));
             }
-            label.setAttribute('x', origin.x+5);
+            if (origin.x <= 0 || origin.x >= this.parent_holder.offsetWidth-30) {
+                label.setAttribute('x', 5);
+            } else {
+                label.setAttribute('x', origin.x+5);
+            }
             label.setAttribute('y', this.parent_holder.offsetHeight-origin.y-i*scalewidth.y);
             this.g.appendChild(label);
         }
